@@ -33,6 +33,10 @@
             position: absolute;      /* 요소를 띄어놓을 수 있게 */
             width: 46px;
             height: 46px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
             margin: auto;
             border:  1px solid rgba(255, 255, 255,.8);
             border-radius: 50%;
@@ -57,16 +61,23 @@
         const target = document.querySelector('.target');
         const tag = document.querySelector('.tag');
 
+        /* html 문서가 읽혀지면 실행이 되는 load */
         addEventListener('load', function() {
             const targetRect = target.getBoundingClientRect();
-            const  targetHalfWidth = targetRect.widht / 2;  /* targetrect의 반을 불러오는 형태 */
+            const targetHalfWidth = targetRect.width / 2;  /* targetrect의 반을 불러오는 형태 */
             const targetHalfHeight = targetRect.height / 2;
             
 
             document.addEventListener('mousemove', function(e) {
-                const x = e.clientX;   /* 매계변수는 정하기 나름 */
+                const x = e.clientX;   /* 매계변수는 정하기 나름 */ /* 마우스가 움직일 때의 값 */
                 const y = e.clientY;
-                console.log(`${x} ${y}`)  /* 마우스가 움직일 때 마다 좌표가 찍히는 */
+                console.log(`${x} ${y}`);  /* 마우스가 움직일 때 마다 좌표가 찍히는 */
+
+                vertical.style.transform = `translateX(${x}px)`;  /* mouse move가 실행이 되었을 때 실행이 되는 */
+                horizontal.style.transform = `translateY(${y}px)`; 
+                target.style.transform = `translate(${x - targetHalfWidth}px, ${y - targetHalfHeight}px)`; /* 원을 좌표 가운데에 맞게 */
+                tag.style.transform = `translate(${x}px, ${y}px)`; 
+                tag.innerHTML = `${x}px,${y}px`
             })
         })
 
